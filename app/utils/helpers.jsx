@@ -4,7 +4,7 @@ function getUserInformation (username) {
     return axios.get('https://api.github.com/users/' + username);
 }
 
-function getRepositories(username) {
+function getRepositories (username) {
     return axios.get('https://api.github.com/users/' + username + '/repos');
 }
 
@@ -15,7 +15,7 @@ module.exports = {
                 return {
                     biography: arr[0].data,
                     repositories: arr[1].data
-                }
+                };
             });
     }
 };
