@@ -5,24 +5,30 @@ var UserProfile = require('./GitHub/UserProfile.jsx');
 var Notes = require('./Notes/Notes.jsx');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
+var helpers = require('../utils/helpers.jsx');
 
 module.exports = React.createClass({
     mixins: [Router.State, ReactFireMixin],
     getInitialState: function () {
         return {
-            notes: ['note1', 'note2'],
-            biography: {
-                name: 'Gustavo',
-                surname: 'Muñoz',
-                age: 35
-            },
-            repositories: ['repo1', 'repo2']
+            notes: [],
+            biography: {},
+            repositories: []
         };
     },
     componentDidMount: function () {
         this.ref = new Firebase('https://firstreactapp.firebaseio.com/');
         var childRef = this.ref.child(this.getParams().username);
         this.bindAsArray(childRef, 'notes');
+
+        helpers.getGitHubInformation(this.getParams().username)
+            .then(function (dataObj) {
+                console.log(dataObj);
+                this.setState({
+                    biography: dataObj.biography,
+                    repositories: dataObj.repositories
+                });
+            }.bind(this));
     },
     componentWillUnmount: function () {
         this.unbind('notes');
@@ -38,7 +44,7 @@ module.exports = React.createClass({
                     <UserProfile username={username} biography={this.state.biography}></UserProfile>
                 </div>
                 <div className="col-md-4">
-                    <Repositories username={username} repositories={this.state.repositories}></Repositories>
+                    <Repositories repositories={this.state.repositories}></Repositories>
                 </div>
                 <div className="col-md-4">
                     <Notes username={username} notes={this.state.notes} addNote={this.handleAddNote}></Notes>

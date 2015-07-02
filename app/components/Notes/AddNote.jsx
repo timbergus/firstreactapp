@@ -6,14 +6,16 @@ module.exports = React.createClass({
         addNote: React.PropTypes.func.isRequired
     },
     handleSubmit: function () {
-
+        var newNote = this.refs.note.getDOMNode().value;
+        this.refs.note.getDOMNode().value = '';
+        this.props.addNote(newNote);
     },
     render: function () {
         return (
             <div className="input-group">
-                <input type="text" className="form-control" ref="note" placeHolder="Add new note..."/>
+                <input type="text" className="form-control" ref="note" placeholder="Add new note..."/>
                 <span className="input-group-btn">
-                    <button className="btn btn-default" onClick={this.handleSubmit}></button>
+                    <button className="btn btn-default" onClick={this.handleSubmit}>Submit</button>
                 </span>
             </div>
         );
