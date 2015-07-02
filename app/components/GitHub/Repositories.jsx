@@ -8,7 +8,7 @@ module.exports = React.createClass({
         var repositories = this.props.repositories.map(function (repository, index) {
             return (
                 <li className="list-group-item" key={index}>
-                    {repository.html_url && <h4><a href={repository.html_url}>{repository.name}</a></h4>}
+                    {repository.html_url && <h4><a href={repository.html_url} target="_blank">{repository.name}</a></h4>}
                     {repository.description && <p>{repository.description}</p>}
                 </li>
             );
