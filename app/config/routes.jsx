@@ -1,3 +1,4 @@
+var React = require('react');
 var Main = require('../components/Main.jsx');
 var Home = require('../components/Home.jsx');
 var Profile = require('../components/Profile.jsx');
